@@ -5,15 +5,25 @@ public class Cipher {
         int d3 = 15;
         int d4 = 3;
 
+        int d5 = 12;
+        int d6 = 5;
+
         String[] strings1 = new String[] { "Hello", "Happy Birthday", "I am an egg", "I bet you will not get this" };
         String[] strings2 = new String[] { "Meet me at the toga party!" };
         String[] strings3 = new String[] { "Do you feel like a computer hacker yet?" };
         String[] strings4 = new String[] { "You solved it!" };
 
+        String[] strings5 = new String[] { "You Solved This Too!" };
+        String[] strings6 = new String[] {"KAG EAXHQP FTUE FAA!"};
+        // Double encrypted: "PFL JFCMVU KYZJ KFF!"
+
         encrypt(strings1, d1);
         encrypt(strings2, d2);
         encrypt(strings3, d3);
         encrypt(strings4, d4);
+
+        encrypt(strings5, d5);
+        encrypt(strings6, d6);
 
         decrypt("BRX VROYHG LW!");
     }
