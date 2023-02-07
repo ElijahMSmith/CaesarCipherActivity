@@ -1,49 +1,41 @@
 public class Cipher {
     public static void main(String[] args) {
-        int d1 = 7;
-        int d2 = 23;
-        int d3 = 15;
-        int d4 = 3;
+        if (args.length < 1 || !(args[0].equals("-e") || args[0].equals("-d")))
+            throw new Error("ERROR: Flag -e or -d must be the first argument provided.");
 
-        int d5 = 12;
-        int d6 = 5;
+        int shift = 0;
+        boolean encrypt = args[0].equals("-e");
 
-        String[] strings1 = new String[] { "Hello", "Happy Birthday", "I am an egg", "I bet you will not get this" };
-        String[] strings2 = new String[] { "Meet me at the toga party!" };
-        String[] strings3 = new String[] { "Do you feel like a computer hacker yet?" };
-        String[] strings4 = new String[] { "You solved it!" };
+        if (encrypt) {
+            if (args.length < 2)
+                throw new Error("ERROR: -e flag must be followed by a valid shift index.");
+            shift = Integer.parseInt(args[1]);
+        }
 
-        String[] strings5 = new String[] { "You Solved This Too!" };
-        String[] strings6 = new String[] {"KAG EAXHQP FTUE FAA!"};
-        // Double encrypted: "PFL JFCMVU KYZJ KFF!"
+        StringBuilder build = new StringBuilder();
 
-        encrypt(strings1, d1);
-        encrypt(strings2, d2);
-        encrypt(strings3, d3);
-        encrypt(strings4, d4);
+        for (int i = encrypt ? 2 : 1; i < args.length; i++)
+            build.append(args[i] + " ");
 
-        encrypt(strings5, d5);
-        encrypt(strings6, d6);
-
-        decrypt("BRX VROYHG LW!");
+        if (encrypt)
+            encrypt(build.toString().trim(), shift);
+        else
+            decrypt(build.toString().trim());
     }
 
-    public static void encrypt(String[] plaintext, int d) {
+    public static void encrypt(String plaintext, int shift) {
         String cipher = "ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-        System.out.println("Encrypted with d = " + d);
-        for (String s : plaintext) {
-            s = s.toUpperCase();
-            StringBuilder build = new StringBuilder();
-            for (char c : s.toCharArray()) {
-                if (Character.isAlphabetic(c))
-                    build.append(cipher.charAt(cipher.indexOf(c) + d));
-                else
-                    build.append(c);
-            }
-            System.out.println(build.toString());
+        System.out.println("Encrypted with shift = " + shift);
+        plaintext = plaintext.toUpperCase();
+        StringBuilder build = new StringBuilder();
+        for (char c : plaintext.toCharArray()) {
+            if (Character.isAlphabetic(c))
+                build.append(cipher.charAt(cipher.indexOf(c) + shift));
+            else
+                build.append(c);
         }
-        System.out.println();
+        System.out.println(build.toString());
     }
 
     public static void decrypt(String encrypted) {
